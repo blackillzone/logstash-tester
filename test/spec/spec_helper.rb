@@ -51,4 +51,3 @@ RSpec::Matchers.define :match do |value|
     !event.include?("tags")
   end
 end
-

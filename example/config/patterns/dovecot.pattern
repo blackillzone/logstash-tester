@@ -6,4 +6,3 @@ DOVECOT_METHOD [a-zA-Z]+
 DOVECOT_USER [^>]*
 
 DOVECOT_LOGIN %{DOVECOT_PROTOCOL:protocol}-login: %{DOVECOT_ACTION:action}( \(%{DATA:action_info}\))?: user=<%{DATA:user}>, method=%{DOVECOT_METHOD:method}, rip=%{IP:remote_ip}, lip=%{IP:local_ip}
-

@@ -60,7 +60,7 @@ run_docker() {
     rootdir=`dirname $0`
 
     echo "====> Build docker image for test"
-    docker build -t gaspaio/logstash-tester \
+    sudo docker build -t gaspaio/logstash-tester \
         --build-arg LST=$rootdir \
         --build-arg FILTER_CONFIG=$3 \
         --build-arg PATTERN_CONFIG=$4 \
@@ -69,7 +69,7 @@ run_docker() {
         -f $rootdir/Dockerfile .
 
     echo "====> Run test in docker container"
-    docker run --rm -it gaspaio/logstash-tester $action $configtest
+    sudo docker run --rm -it gaspaio/logstash-tester $action $configtest
 }
 
 # Default values
@@ -111,9 +111,9 @@ shift $((OPTIND-1))
 if [[ -z $@ ]]; then
     action=all
 elif [[ $@ != 'all' && $@ != 'filters' && $@ != 'patterns' ]]; then
-    error "'$@' is not a valid action."
+    error "'$*' is not a valid action."
 else
-    action=$@
+    action=("$@")
 fi
 
 # Handle compulsory arguments
@@ -145,5 +145,8 @@ if [[ ! -d $docker_pattern_test ]]; then
     error "The patterns tests directory '$docker_pattern_test' does not exist."
 fi
 
-run_docker $action $configtest $docker_filter_config $docker_pattern_config $docker_filter_test $docker_pattern_test
-
+run_docker "${action[@]}" \
+    $docker_filter_config \
+    $docker_pattern_config \
+    $docker_filter_test \
+    $docker_pattern_test

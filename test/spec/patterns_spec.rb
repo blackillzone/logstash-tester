@@ -40,4 +40,3 @@ pattern_data.each do |data_file|
     end
   end
 end
-
