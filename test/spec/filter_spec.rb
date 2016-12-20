@@ -43,7 +43,7 @@ def run_case(tcase, fields, ignore, data_file, i)
     # Test individual field values
     expected.each do |name,value|
       msg = "\n#{msg_header} Field value mismatch: '#{name}'\nExpected: #{value} (#{value.class})\nGot: #{lsresult[name]} (#{lsresult[name].class})\n\n--"
-      expect(lsresult[name].to_s).to eq(value.to_s), msg
+      expect(lsresult[name]).to eq(value), msg
     end
   end
 end
